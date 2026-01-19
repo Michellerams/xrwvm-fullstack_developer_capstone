@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Best Cars Dealership</title>
+    
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: darkturquoise!important;
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+            font-size: 1.6rem;
+        }
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-left: 25px;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        .card {
+            position: relative;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .sample-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 140px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.12);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 5;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+        .car-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .contact-section {
+            padding: 50px 40px;
+            display: flex;
+            justify-content: center;      
+            align-items: center;          
+            gap: 60px;                    
+            flex-wrap: wrap;
+        }
+        .icon-container {
+            flex: 0 0 140px;
+            text-align: center;
+            padding-top: 100px; /* moved icon a bit lower */
+        }
+        .icon-headset {
+            font-size: 200px; /* bigger icon as requested */
+            color: darkturquoise;
+            line-height: 1;
+        }
+        .contact-details {
+            flex: 1;
+            min-width: 300px;
+            text-align: right;
+        }
+        .contact-details p {
+            margin: 18px 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        .contact-details strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+        .contact-details a {
+            color: darkturquoise;
+            text-decoration: none;
+        }
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+        .divider {
+            width: 2px;
+            background-color: #000000;
+            height: 280px;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation - links on the LEFT -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-3" href="/">Dealerships</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contact/">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="content">
+                <!-- Car lot image -->
+                <div class="car-image">
+                    <img src="/static/cars.jpeg" 
+                         alt="Car Dealership Lot">
+                </div>
+
+                <!-- Contact info section -->
+                <div class="contact-section">
+                    <div class="icon-container">
+                       
+                        <img src="/static/contactus.png" alt="Contact Icon" style="width:120px;"> 
+                    </div>
+
+                    <!-- Optional vertical line divider (like in your sample) -->
+                    <div class="divider"></div>
+
+                    <div class="contact-details">
+                        <p>
+                            <strong>Contact Customer Service</strong>
+                            support@bestcars.com
+                        </p>
+                        <p>
+                            <strong>Contact our National Advertising team</strong>
+                            NationalSales@bestcars.com
+                        </p>
+                        <p>
+                            <strong>Contact our Public Relations team</strong>
+                            PR@bestcars.com
+                        </p>
+                        <p>
+                            <strong>Contact the bestcars.com offices</strong>
+                            312-611-1111
+                        </p>
+                        <p>
+                            <strong>Become a bestcars.com car dealer</strong>
+                            Visit <a href="https://growwithbestcars.com">growwithbestcars.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
