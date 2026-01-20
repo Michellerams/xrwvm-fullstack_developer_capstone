@@ -20,15 +20,39 @@ logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def login_user(request):
-    data = json.loads(request.body)
-    username = data['userName']
-    password = data['password']
-    user = authenticate(username=username, password=password)
-    data = {"userName": username}
-    if user is not None:
-        login(request, user)
-        data = {"userName": username, "status": "Authenticated"}
-    return JsonResponse(data)
+    # Handle GET requests first
+    if request.method == 'GET':
+        return JsonResponse({
+            "message": "Login API endpoint",
+            "usage": "Send POST request with JSON data",
+            "required_fields": ["userName", "password"],
+            "example": {
+                "userName": "Michelle",
+                "password": "123456789"
+            }
+        })
+    
+    # Handle POST requests (the actual login)
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data['userName']
+            password = data['password']
+            user = authenticate(username=username, password=password)
+            data = {"userName": username}
+            if user is not None:
+                login(request, user)
+                data = {"userName": username, "status": "Authenticated"}
+            return JsonResponse(data)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON format"}, status=400)
+        except KeyError as e:
+            return JsonResponse({"error": f"Missing field: {str(e)}"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    
+    # Handle other HTTP methods
+    return JsonResponse({"error": "Method not allowed"}, status=405)
 
 def logout_request(request):
     logout(request)
@@ -36,34 +60,37 @@ def logout_request(request):
     return JsonResponse(data)
 
 @csrf_exempt
+@csrf_exempt
 def registration(request):
+    context = {}
+
+    # Load JSON data from the request body
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
     first_name = data['firstName']
     last_name = data['lastName']
     email = data['email']
-    
     username_exist = False
+    email_exist = False
     try:
+        # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except User.DoesNotExist:
+    except:
+        # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
+    # If it is a new user
     if not username_exist:
-        user = User.objects.create_user(
-            username=username, 
-            first_name=first_name, 
-            last_name=last_name, 
-            password=password, 
-            email=email
-        )
+        # Create user in auth_user table
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,password=password, email=email)
+        # Login the user and redirect to list page
         login(request, user)
-        data = {"userName": username, "status": "Authenticated"}
+        data = {"userName":username,"status":"Authenticated"}
         return JsonResponse(data)
-    else:
-        data = {"userName": username, "error": "Already Registered"}
+    else :
+        data = {"userName":username,"error":"Already Registered"}
         return JsonResponse(data)
 
 # Add the get_cars view
@@ -79,7 +106,7 @@ def get_cars(request):
     return JsonResponse({"CarModels": cars})
 
 # Placeholder for future views (get_dealerships, get_dealer_reviews, etc.)
-#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"):
     if(state == "All"):
         endpoint = "/fetchDealers"
@@ -119,3 +146,6 @@ def add_review(request):
             return JsonResponse({"status":401,"message":"Error in posting review"})
     else:
         return JsonResponse({"status":403,"message":"Unauthorized"})
+
+
+#from .restapis import get_request, analyze_review_sentiments, post_review
