@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import CarMake, CarModel
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
