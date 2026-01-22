@@ -95,17 +95,54 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
+#def get_dealer_reviews(request, dealer_id):
+    #if (dealer_id):
+        #endpoint = "/fetchReviews/dealer/" + str(dealer_id)
+        #reviews = get_request(endpoint)
+       # for review_detail in reviews:
+           # response = analyze_review_sentiments(review_detail['review'])
+            #review_detail['sentiment'] = response['sentiment']
+        #return JsonResponse({"status": 200, "reviews": reviews})
+    #else:
+        #return JsonResponse({"status": 400, "message": "Bad Request"})
 def get_dealer_reviews(request, dealer_id):
-    if (dealer_id):
-        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
-        reviews = get_request(endpoint)
-        for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail['review'])
-            review_detail['sentiment'] = response['sentiment']
-        return JsonResponse({"status": 200, "reviews": reviews})
-    else:
+    if not dealer_id:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
+    endpoint = f"/fetchReviews/dealer/{dealer_id}"
+    reviews = get_request(endpoint)
+
+    # Add debug logging so you can see what's happening
+    logger.info(f"Fetched {len(reviews) if reviews else 0} reviews for dealer {dealer_id}")
+    logger.debug(f"Raw reviews data: {reviews}")
+
+    processed_reviews = []
+
+    for review_detail in reviews or []:  # protect against None
+        # Start with the original review data
+        processed_review = review_detail.copy()
+
+        # Try to get sentiment — never crash the view
+        try:
+            response = analyze_review_sentiments(review_detail['review'])
+            if isinstance(response, dict) and 'sentiment' in response:
+                processed_review['sentiment'] = response['sentiment']
+            else:
+                processed_review['sentiment'] = 'neutral'
+                logger.warning(f"No valid sentiment returned for review {review_detail.get('id')}")
+        except Exception as e:
+            logger.error(f"Sentiment analysis failed for review {review_detail.get('id')}: {str(e)}")
+            processed_review['sentiment'] = 'neutral'
+
+        processed_reviews.append(processed_review)
+
+    return JsonResponse({
+        "status": 200,
+        "reviews": processed_reviews
+    })
+
+
+##
 
 def add_review(request):
     if not request.user.is_anonymous:
