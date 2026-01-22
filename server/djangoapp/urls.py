@@ -8,10 +8,13 @@ urlpatterns = [
     # path for registration
     path(route='register/',
          view=views.registration, name='register'),
-
+    path(route='register',    view=views.registration, name='register_noslash'),  # ← ADD THIS
+   
     # path for login
     path(route='login',
          view=views.login_user, name='login'),
+    path(route='login/',      view=views.login_user, name='login'),
+
     path(route='logout',
          view=views.logout_request, name='logout'),
 
