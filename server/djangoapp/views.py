@@ -120,3 +120,5 @@ def add_review(request):
             })
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
+
+from .restapis import get_request, analyze_review_sentiments, post_review
