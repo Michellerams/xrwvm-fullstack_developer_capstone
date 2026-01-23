@@ -4,10 +4,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import logging
 import json
-
 from .models import CarMake, CarModel
 from .populate import initiate
-from .restapis import get_request, analyze_review_sentiments, post_review
 
 logger = logging.getLogger(__name__)
 
@@ -106,6 +104,7 @@ def get_dealer_details(request, dealer_id):
     #else:
         #return JsonResponse({"status": 400, "message": "Bad Request"})
 
+
 def get_dealer_reviews(request, dealer_id):
     if not dealer_id:
         return JsonResponse({"status": 400, "message": "Bad Request"})
@@ -142,8 +141,6 @@ def get_dealer_reviews(request, dealer_id):
         "reviews": processed_reviews
     })
 
-
-##
 
 def add_review(request):
     if not request.user.is_anonymous:
