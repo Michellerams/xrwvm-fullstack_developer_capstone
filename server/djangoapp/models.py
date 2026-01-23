@@ -13,6 +13,7 @@ class CarMake(models.Model):
     
     def __str__(self):
         return self.name  # Return the name as the string representation
+        
     
     class Meta:
         verbose_name = "Car Make"
@@ -53,6 +54,7 @@ class CarModel(models.Model):
     
     def __str__(self):
         return f"{self.car_make.name} {self.name} ({self.year})"  # Return car make, model name, and year
+
     
     class Meta:
         verbose_name = "Car Model"
