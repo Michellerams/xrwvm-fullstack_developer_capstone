@@ -1,14 +1,7 @@
 [flake8]
 max-line-length = 120
 extend-ignore =
-    E203,  # whitespace before ':'
-    W503,  # line break before binary operator
-    E501,  # line too long (we're using 120 now)
-    E265,  # block comment should start with '# '
-    E402,  # module level import not at top of file
-    W292,  # no newline at end of file (optional - remove if you want to keep enforcing it)
-
-# Exclude directories/files you don't want to lint
+    E203,W503,E501,E265,E402,W292
 exclude =
     .git,
     __pycache__,
