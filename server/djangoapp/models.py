@@ -56,4 +56,3 @@ class CarModel(models.Model):
     class Meta:
         verbose_name = "Car Model"
         verbose_name_plural = "Car Models"
-
