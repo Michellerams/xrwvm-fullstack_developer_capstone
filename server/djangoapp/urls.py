@@ -9,7 +9,7 @@ urlpatterns = [
     path(route='register/',
          view=views.registration, name='register'),
     path(route='register',    view=views.registration, name='register_noslash'),  # ← ADD THIS
-   
+
     # path for login
     path(route='login',
          view=views.login_user, name='login'),
