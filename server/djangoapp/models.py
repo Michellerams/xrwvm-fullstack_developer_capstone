@@ -1,8 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib import admin
-
-# Create your models here.
 
 class CarMake(models.Model):
     name = models.CharField(max_length=100)
